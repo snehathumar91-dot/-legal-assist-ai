@@ -8,7 +8,6 @@ import { Header } from './components/Header';
 import { SimplifyDocView } from './components/SimplifyDocView';
 import { CompareContractsView } from './components/CompareContractsView';
 import { ClauseClarifierAndChatView } from './components/ClauseClarifierAndChatView';
-import { VideoRecordingAssistant } from './components/VideoRecordingAssistant';
 import { SAMPLE_CONTRACTS } from './data/sampleContracts';
 import { SimplifiedDocumentResult, SupportedLanguage, ReadingLevel } from './types';
 import { Scale, Sparkles, Shield, FileCheck, CheckCircle } from 'lucide-react';
@@ -74,13 +73,6 @@ export default function App() {
           />
         )}
       </main>
-
-      {/* Floating 4-Minute Video Recording Studio & Teleprompter */}
-      <VideoRecordingAssistant
-        onNavigateTab={(tab) => setActiveTab(tab)}
-        onSetDocumentText={(text) => setDocumentText(text)}
-        onTriggerSimplify={() => {}}
-      />
 
       {/* Footer & Challenge Context */}
       <footer className="border-t border-stone-200 bg-white py-8 text-xs text-stone-600">

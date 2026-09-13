@@ -3,13 +3,29 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
+import helmet from "helmet";
+import compression from "compression";
+import rateLimit from "express-rate-limit";
 
 dotenv.config();
 
 const app = express();
 const PORT = 3000;
 
+// High Impact Security & Efficiency Middleware
+app.use(helmet({ contentSecurityPolicy: false })); // XSS Protection & Secure Headers
+app.use(compression()); // Payload Compression for Efficiency
 app.use(express.json({ limit: "10mb" }));
+
+// Rate Limiting to prevent DDoS and API Abuse
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
+  message: { error: "Too many requests from this IP, please try again after 15 minutes" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use("/api/", apiLimiter);
 
 // Open CORS and Cache-Control headers so visitors can access freely
 app.use((req, res, next) => {
